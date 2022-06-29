@@ -1,0 +1,10 @@
+---
+- name: MySQL server installation
+  hosts: all
+  become: yes
+  tasks:
+  - name: Install latest MySQL server when host RAM greater than 900 MB
+    package:
+      name: mysql-server
+      state: latest
+    when: 900 < ansible_memfree_mb

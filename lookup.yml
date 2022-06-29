@@ -1,0 +1,10 @@
+---
+- name: Read a file
+  gather_facts: no
+  hosts: app1
+  vars: 
+    my_file: "{{ lookup('file', 'test.txt') }}" 
+  tasks: 
+    - name: show test file content 
+      debug: 
+        msg: "{{ my_file }}"

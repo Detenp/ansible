@@ -1,0 +1,31 @@
+---
+
+- name: Apache server installed
+  hosts: webservers 
+  become: yes 
+  tasks:
+  - name: Install, configure, and start Apache
+     block:
+       - name: Apply the config template
+         template:
+           src: templates/index.html.j2
+           dest: /var/www/html/index.html
+
+       - name: Start service bar and enable it
+         service:
+           name: httpd
+           state: restarted
+           enabled: True
+     rescue:
+       - name: Install httpd and memcached
+         yum:
+           name:
+           - httpd
+           - memcached
+           state: present
+     always:
+       - name: Start service and enable it
+         service:
+           name: httpd
+           state: started
+           enabled: True

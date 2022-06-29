@@ -1,0 +1,11 @@
+---
+
+- name: Check service
+  hosts: webservers
+  become: yes
+  tasks:
+  - name: restart service
+    systemd:
+      name: "{{ service }}"
+      enabled: true
+      state: restarted
